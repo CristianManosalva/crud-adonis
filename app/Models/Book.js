@@ -10,6 +10,9 @@ class Book extends Model {
     static get primaryKey() {
         return 'id'
     }
+    user() {
+        return this.belongsTo('App/Models/User')
+    }
 }
 
 module.exports = Book

@@ -10,7 +10,7 @@ class BookSchema extends Schema {
       table.string('title').nullable()
       table.string('isbn').nullable()
       table.string('publisher_name').nullable()
-      table.string('author_name').nullable()
+      table.integer('user_id').unsigned().references('id').inTable('users')
       table.timestamps()
     })
   }
