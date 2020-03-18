@@ -54,7 +54,7 @@ class UserController {
       console.log('Error in UserController attach\n', error)
       response.json({
         status: 500,
-        message: 'internal server error'
+        message: 'internal server error making error'
       })
     }
   }
