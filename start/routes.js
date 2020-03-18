@@ -25,7 +25,7 @@ Route.get('/', () => {
 //route group for books
 Route.group(() => {
   Route.post('/', 'BookController.store').middleware('auth')
-  Route.get('/', 'BookController.index')
+  Route.get('/', 'BookController.index').middleware('auth', 'is:Administrador')
   Route.put('/:id', 'BookController.update')
 }).prefix('api/test/book')
 
