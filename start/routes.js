@@ -18,14 +18,20 @@ const Route = use('Route')
 //const BookController = use('App/Controllers/Http/BookController')
 
 Route.get('/', () => {
-    //const bookInfo = request.only(['title','isbn','publisher_name', 'authir'])
-    return { greeting: 'Hello world in JSON' }
-  })
+  //const bookInfo = request.only(['title','isbn','publisher_name', 'authir'])
+  return { greeting: 'Hello world in JSON' }
+})
 
 Route.group(() => {
-  Route.post('/', 'BookController.store')
+  Route.post('/', 'BookController.store').middleware('auth')
   Route.get('/', 'BookController.index')
   Route.put('/:id', 'BookController.update')
 }).prefix('api/test/book')
+
+Route.group(() => {
+  Route.post('/', 'UserController.store')
+  Route.get('/', 'UserController.index')
+  Route.post('/login', 'AuthController.login')
+}).prefix('api/test/user')
 
 //() => {return { message: 'Getting books' }}
