@@ -1,6 +1,7 @@
 'use strict'
 
 const User = use('App/Models/User')
+const Role = use('Adonis/Acl/Role')
 
 class UserController {
   async login({ auth, request }) {
@@ -37,11 +38,25 @@ class UserController {
     }
   }
 
-  show({ auth, params }) {
-    if (auth.user.id !== Number(params.id)) {
-      return { message: 'You need be logged' }
+  async attachRole({ request, response }) {
+    try {
+      const attchInfo = request.only(['user_id', 'role_id'])
+      const user = await User.findBy('id', attchInfo.user_id)
+      console.log(
+        '\n-------------------------\n',
+        user,
+        '\n-------------------------\n'
+      )
+      const role = await Role.findBy('id', attchInfo.role_id)
+      await user.roles().attach([role.id])
+      response.status(202).json({ message: 'role attached successfully' })
+    } catch (error) {
+      console.log('Error in UserController attach\n', error)
+      response.json({
+        status: 500,
+        message: 'internal server error'
+      })
     }
-    return auth.user
   }
 }
 

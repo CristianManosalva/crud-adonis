@@ -22,16 +22,24 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
+//route group for books
 Route.group(() => {
   Route.post('/', 'BookController.store').middleware('auth')
   Route.get('/', 'BookController.index')
   Route.put('/:id', 'BookController.update')
 }).prefix('api/test/book')
 
+//route group for users
 Route.group(() => {
   Route.post('/', 'UserController.store')
   Route.get('/', 'UserController.index')
   Route.post('/login', 'AuthController.login')
+  Route.post('/attach', 'UserController.attachRole')
 }).prefix('api/test/user')
 
-//() => {return { message: 'Getting books' }}
+//route group for roles
+Route.group(() => {
+  Route.post('/', 'RoleController.store')
+  Route.get('/', 'RoleController.index')
+  //Route.post('/login', 'AuthController.login')
+}).prefix('api/test/role')
